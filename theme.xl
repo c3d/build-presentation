@@ -516,10 +516,11 @@ once
     START_TIME := seconds_time
 
 contents 0,
-    color "lightgray"
-    rectangle 0, -482, 1700 * (seconds_time - START_TIME) / TOTAL_DURATION, 2
+    color "red"
+    rectangle 0, -480, 1700 * (seconds_time - START_TIME) / TOTAL_DURATION, 4
     if page_count > 0 then
-        rectangle 0, -478, 1700 * page_number / page_count, 2
+        color "green"
+        rectangle 0, -480, 1700 * page_number / page_count, 2
 
 LANG -> "fr"
 English fr French -> if LANG="fr" then French else English

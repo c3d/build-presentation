@@ -3,6 +3,8 @@ BUILD=build/
 SOURCES=        hello.c                 \
                 hello-helper.c
 
+PRODUCTS=       hello.exe
+
 SUBDIRS=        libs                    \
                 tests
 

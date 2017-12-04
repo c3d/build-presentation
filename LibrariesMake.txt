@@ -3,6 +3,8 @@ BUILD=build/
 SOURCES=        hello.c                 \
                 hello-helper.c
 
+PRODUCTS=       hello.exe
+
 LIBRARIES=      libs/my-private-lib.lib \
                 shared/shared-stuff.dll
 

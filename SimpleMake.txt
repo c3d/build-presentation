@@ -3,4 +3,6 @@ BUILD=build/
 SOURCES=        hello.c                 \
                 hello-helper.c
 
+PRODUCTS=       hello.exe
+
 include $(BUILD)rules.mk

@@ -8,7 +8,7 @@ main_title_slide "Main title",
         italic
         bold
         paragraph "Build programs designed for autoconf and automake" fr "Construire des programmes conçus pour automake et autoconf"
-        paragraph "using only plain old regular make" fr "en n'utilisant que le bon vieux make"
+        paragraph "using only plain old regular GNU make" fr "en n'utilisant que le bon vieux GNU make"
         paragraph "(and yes, that includes configuration)" fr "(et oui, y compris la configuration automatique)"
     presentation_author "Christophe de Dinechin (dinechin@redhat.com, IRC c3d)"
 
@@ -32,8 +32,8 @@ base_slide "Why create yet another 'build' system?" fr "Pourquoi inventer encore
         paragraph "I did a few interesting things:" fr "J'ai fait pas mal de trucs marrants avant"
         * "Writing video games" fr "Écrire des jeux vidéo"
         * "Creating programming languages" fr "Créer des langages de programmation"
-        * "Designing and implementing an operating system" fr "Concevoir un système d'exploitation commercial"
         * "Invent an interactive 3D kind of ""web""" fr "Inventer une sorte de  ""web"" en vraie 3D interactive"
+        * "Designing and implementing an operating system" fr "Concevoir un système d'exploitation commercial"
         * "Contributing to the DxO ONE camera" fr "Contribuer à un appareil photo hors normes"
 
         at_step 7
@@ -62,9 +62,6 @@ base_slide "Why create yet another 'build' system?" fr "Pourquoi inventer encore
                 render load_text "example.xl"
 
         rotate_step 3,
-            image 0, 0, 1, 1, "hp-integrity-vm.jpg"
-
-        rotate_step 4,
             light 0
             light_position 100, 100, 1000
             light_diffuse "#46C"
@@ -89,6 +86,9 @@ base_slide "Why create yet another 'build' system?" fr "Pourquoi inventer encore
                 rotate_y 0.71 * time + 0.3 * Y
             rotations mouse_x, mouse_y
             cube 0, 0, 0, 200, 200, 200
+
+        rotate_step 4,
+            image 0, 0, 1, 1, "hp-integrity-vm.jpg"
 
         rotate_step 5,
             image 0, 0, 80%, 80%, "DxO ONE.png"
@@ -189,6 +189,18 @@ count_people 6 -> 0
 count_people 7 -> 0
 count_people 8 -> 0
 count_people N -> writeln "Accessing count_people with ", N
+
+
+// ----------------------------------------------------------------------------
+base_slide "Why auto-configure" fr "L'auto-configuration, pourquoi?",
+// ----------------------------------------------------------------------------
+    title page_label
+    subtitle "Write portable programs in a hostile world" fr "Écrire des programmes portables dans un monde cruel"
+    stepping
+    picture
+        at_step 1
+        scale fade_at(smooth_step, 1)
+        image 0, 60, 100%, 70%, "Unix_timeline.png"
 
 
 // ----------------------------------------------------------------------------
@@ -293,6 +305,11 @@ base_slide "Autoconf: where is the problem?" fr "C'est quoi le problème avec au
         translate_x 2000
         if smooth_step >= 7.2 and smooth_step <= 8.9 then
             image -400, 50, 65%, 65%, "AutoconfOutput.png"
+            locally
+                color "yellow", 10%
+                line_color "yellow"
+                line_width 3
+                rectangle -400, mouse_y, 850, 40
             box 500, 50, 800, 600,
                 * "Does my program really depend on --param=ssp-buffer-size=4?" fr "C'est quoi ce --param=ssp-buffer-size=4?"
                 * "What happens if the option is not supported?" fr "Qu'est ce qui se passe quand l'option ne marche pas?"
@@ -373,7 +390,7 @@ base_slide "Build: auto-configure with make" fr "Build: auto-configurer avec mak
         ** "Subdirectories" fr "Sous-répertoires"
         ** "Private and public libraries" fr "Librairies publiques et privées"
         * "It can auto-configure:" fr "Auto-configuration automatique:"
-        ** "Header files such as <sys/stat.h>" fr "Fichiers ""headers"" comme <<sys/stat.h>"
+        ** "Header files such as <sys/stat.h>" fr "Fichiers ""headers"" comme <sys/stat.h>"
         ** "Libraries such as libm or libdl" fr "Librairies comme libm ou libdl"
         ** "Functions like clearenv" fr "Fonctions comme clearenv"
         * "Package management with pkg-config" fr "Gestion des packages avec pkg-config"
@@ -444,11 +461,11 @@ base_slide "Adding configuration tests" fr "Ajouter des tests de configuration",
     picture
         at_step 1
         code_box -500, 120, 800, 600, "Configuration",
-            font_size 30
+            font_size 20
             text load_text "ConfigMake.txt"
         at_step 2
         code_box 500, 120, 800, 600, "config.h",
-            font_size 30
+            font_size 20
             text load_text "ConfigMake-config.h.txt"
 
 
@@ -478,7 +495,7 @@ base_slide "Some useful stats" fr "Quelques données chiffrées",
     stepping
     picture
         translate_y 120
-        comparison_chart 1, -500,  200, 300, 300, "Initial build duration" fr "Durée du premier build", "s", 11, 180
+        comparison_chart 1, -500,  200, 300, 300, "Initial build duration" fr "Durée du premier build", "s", 11.2, 179.7
         comparison_chart 2, -500, -200, 300, 300, "Build after changing one file" fr "Durée après avoir changé un fichier", "s", 1.3, 9.5
         comparison_chart 3, 500, 200, 300, 300, "Size of description files to maintain" fr "Taille des fichiers à maintenir", " lines" fr " lignes", 805, 3731
         comparison_chart 4, 500, -200, 300, 300, "Size of support files" fr "Taille des fichiers de support", " lines" fr " lignes", 1213, 40253
