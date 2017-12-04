@@ -1,0 +1,567 @@
+// ----------------------------------------------------------------------------
+main_title_slide "Main title",
+// ----------------------------------------------------------------------------
+    title "Build: A better way to make programs?" fr "Build: Une meilleure façon d'utiliser make?"
+    subtitle
+        paragraph "https://github.com/c3d/build"
+        paragraph " "
+        italic
+        bold
+        paragraph "Build programs designed for autoconf and automake" fr "Construire des programmes conçus pour automake et autoconf"
+        paragraph "using only plain old regular make" fr "en n'utilisant que le bon vieux make"
+        paragraph "(and yes, that includes configuration)" fr "(et oui, y compris la configuration automatique)"
+    presentation_author "Christophe de Dinechin (dinechin@redhat.com, IRC c3d)"
+
+    picture
+        translate 600, 450, 20
+        rotate_z -8
+        scale 25%
+        texture "Build.jpg"
+        color "white"
+        rounded_rectangle 0, 0, texture_width, texture_height, 80
+
+
+// ----------------------------------------------------------------------------
+base_slide "Why create yet another 'build' system?" fr "Pourquoi inventer encore un 'build'?",
+// ----------------------------------------------------------------------------
+    title page_label
+    subtitle "It's first a rather personal thing" fr "Au début, c'est l'histoire d'un mec"
+    stepping
+    story
+        paragraph "I did a few interesting things:" fr "J'ai fait pas mal de trucs marrants avant"
+        * "Writing video games" fr "Écrire des jeux vidéo"
+        * "Creating programming languages" fr "Créer des langages de programmation"
+        * "Designing and implementing an operating system" fr "Concevoir un système d'exploitation commercial"
+        * "Invent an interactive 3D version of the web" fr "Inventer un web en vraie 3D interactive"
+        * "Contributing to the DxO ONE camera" fr "Contribuer à un appareil photo hors normes"
+
+        at_step 7
+        paragraph " "
+        paragraph "Nobody cares" fr "Le monde entier s'en fout"
+
+        at_step 8
+        paragraph " "
+        bold
+        color_hsv 20 * time, 60%, 40%
+        paragraph "What about smaller, yet useful things, for a change?" fr "Et des trucs plus simples, mais utiles, pour changer?"
+
+    right_picture
+        translate_x -100
+
+        rotate_step 1,
+            ALPHA_WAVES -> "movies/Alpha Waves.mp4##start-time=15"
+            movie 0, 0, 70%, 70%, ALPHA_WAVES
+            movie_set_volume ALPHA_WAVES, 20% * fade_between(smooth_step, 1, 1)
+            on "pageexit",
+                movie_drop ALPHA_WAVES
+
+        rotate_step 2,
+            code_box 0, 0, 700, 500, "XL & Tao3D",
+                font_size 20
+                render load_text "example.xl"
+
+        rotate_step 3,
+            image 0, 0, 1, 1, "hp-integrity-vm.jpg"
+
+        rotate_step 4,
+            light 0
+            light_position 100, 100, 1000
+            light_diffuse "#46C"
+            light 1
+            light_position -100, 100, 1000
+            light_diffuse "#CF6"
+            locally
+                rotate_y 42 * time
+                translate_x 400
+                rotate_y -42 * time - 60 * sin time
+                text_box 0, 0, 300, 200,
+                    extrude_depth 20
+                    color "#669"
+                    font "Luminari", 140
+                    text "Tao3D"
+
+            color "white"
+            line_color "red"
+            rotations X:real, Y:real ->
+                rotate_z 20  * time
+                rotate_x 0.3 * time + 0.3 * X
+                rotate_y 0.71 * time + 0.3 * Y
+            rotations mouse_x, mouse_y
+            cube 0, 0, 0, 200, 200, 200
+
+        rotate_step 5,
+            image 0, 0, 80%, 80%, "DxO ONE.png"
+
+        rotate_step 7,
+            NO_ONE_CARES -> "movies/NoOneCares.mp4"
+            if smooth_step >= 6.8 then
+                movie 0, 0, 50%, 50%, NO_ONE_CARES
+                movie_set_volume NO_ONE_CARES, 40% * fade_between(smooth_step, 7, 7)
+            else
+                movie_drop NO_ONE_CARES
+            on "pageexit",
+                movie_drop NO_ONE_CARES
+
+        rotate_step 8,
+            translate 60, 130, 0
+            scale 50% * (fade_at(smooth_step, 8) + 25% * sin(10 * (smooth_step - 8)))
+            image "GeniusIdea.jpg"
+
+
+// ----------------------------------------------------------------------------
+base_slide "Autowhat?" fr "Autoquoi?",
+// ----------------------------------------------------------------------------
+
+    title page_label
+    subtitle "Do you care about auto-configuration?" fr "Est-ce que l'autoconfiguration, ça vous interpelle?"
+    stepping
+    story
+        translate_x 350
+        * "Who programs using C or C++?" fr "Qui utilise C ou C++?"
+        command "Who knows how to use " fr "Qui sait utiliser ", "make"
+        * "Who is familiar with autoconf & automake" fr "Qui a l'habitude de autoconf et automake?"
+        command "Who starts with " fr "Qui démarre par ", "./configure"
+        command "Who prefers " fr "Qui préfère ", "./autogen.sh"
+        command "Are you strongly partial to " fr "Y a-t-il des farouches partisans de ", "autoreconf -vfi"
+        command "Do you clean up with " fr "Pour nettoyer, utilisez vous ", "git clean -dfx"
+        command "Do real programmers start with " fr "Les vrais programmeurs démarrent-ils avec ", "rm -rf * && cat | as"
+
+    picture
+        people_scale -> 20.0
+        people_graph with 1..8
+        people_graph N ->
+            if smooth_step >= N-0.8 then locally
+                light 0
+                light_position 100, 100, 1000
+                translate -580, 361 - 61 * N, 0
+                color_hsv 30 * N - 30, 90%, 90%
+                rotate_y -45
+                extrude_depth 10 + people_scale * count_people N
+                translate_z 10 + people_scale * count_people N
+                if people_scale * count_people N > 300.0 then
+                    people_scale := 300.0 / count_people N
+                circle 0, 0, 20
+
+                translate_z 40
+                rotate_y 90
+                line_color "white"
+                color_hsv 30 * N - 30, 90%, 70%
+                text_box 0, 0, 60, 40,
+                    align 100%
+                    vertical_align 50%
+                    font "Arial", 40, bold
+                    extrude_depth 5
+                    text "" & count_people N
+
+    on "key:[+p]",      { increment step_people }
+    on "key:[-m]",      { decrement step_people }
+    on "key:r",         { clear step_people; people_scale := 20 }
+    on "key:0",         { digit step_people, 0 }
+    on "key:1",         { digit step_people, 1 }
+    on "key:2",         { digit step_people, 2 }
+    on "key:3",         { digit step_people, 3 }
+    on "key:4",         { digit step_people, 4 }
+    on "key:5",         { digit step_people, 5 }
+    on "key:6",         { digit step_people, 6 }
+    on "key:7",         { digit step_people, 7 }
+    on "key:8",         { digit step_people, 8 }
+    on "key:9",         { digit step_people, 9 }
+    increment N:integer -> N := N + 1
+    decrement N:integer -> N := N - 1
+    clear     N:integer -> N := 0
+    digit     N:integer, D:integer -> N := N * 10 + D
+    command Who, T ->
+        * Who
+        text_span
+            style "code"
+            render T
+        text "?"
+
+step_people -> count_people integer step
+count_people 0 -> 0
+count_people 1 -> 0
+count_people 2 -> 0
+count_people 3 -> 0
+count_people 4 -> 0
+count_people 5 -> 0
+count_people 6 -> 0
+count_people 7 -> 0
+count_people 8 -> 0
+count_people N -> writeln "Accessing count_people with ", N
+
+
+// ----------------------------------------------------------------------------
+base_slide "Auto-configuration for dummies" fr "L'auto-configuration pour les nuls",
+// ----------------------------------------------------------------------------
+    title page_label
+    subtitle "Automatically adapt your program to available features" fr "Adapter votre programme à ce qui est disponible"
+    stepping
+
+    picture
+        code_box -500, 0, 800, 500, "Naive code" fr "Code naïf",
+            text load_text "simple.c"
+
+        at_step 1
+        locally
+            translate -500, 0,  8000 * fade_out_at(smooth_step, 1)
+            rotate_z 30
+            text_box 0, 0, 300, 200,
+                font "Impact", 200
+                color "transparent"
+                line_color "red", 70%
+                line_width 10
+                text "Bad!" fr "Mal!"
+
+        at_step 2
+        code_box 500, 0, 800, 500, "Professional code" fr "Code Pro",
+            font_size 22
+            text load_text "real.c"
+
+        at_step 3
+        locally
+            translate 600, 150,  8000 * fade_out_at(smooth_step, 3)
+            rotate_z -30
+            text_box 0, 0, 300, 200,
+                font "Impact", 200
+                color "transparent"
+                line_color "green", 70%
+                line_width 10
+                text "Good!" fr "Bien!"
+
+
+// ----------------------------------------------------------------------------
+base_slide "Autoconf: where is the problem?" fr "C'est quoi le problème avec autoconf?",
+// ----------------------------------------------------------------------------
+    title page_label
+    subtitle "Sometimes, you don't even know you have a problem" fr "Parfois, c'est difficile d'admettre qu'on a un problème"
+    stepping
+    picture
+        translate_x -2000 * smooth_step
+
+        french
+            image 0, 0, 220%, 220%, "calvin-et-hobbes-luge-looping.jpg"
+        english
+            image 0, 0, 300%, 300%, "calvin-and-hobbes-looping.gif"
+
+        translate_x 2000
+        locally
+            translate -600, 300, 100
+            rotate_z 30
+            box 0, 0, 400, 100,
+                style "subtitle"
+                bold
+                show sin(4 * page_time)^4
+                paragraph "Auto-configuration"
+        image 0, 60, 100%, 70%, "Unix_timeline.png"
+
+        translate_x 2000
+        locally
+            translate -600, 300, 100
+            rotate_z 30
+            box 0, 0, 400, 100,
+                style "subtitle"
+                bold
+                show sin(4 * page_time)^4
+                paragraph "The ""solution""" fr "La ""solution"""
+        image 0, 0, 250%, 250%, "autotools-process.png"
+
+        translate_x 2000
+        image 0, 0, 100%, 100%, "BuildStep1.png"
+        locally
+            box -150, 130, 400, 80,
+                style "subtitle"
+                text "Two? Why two?" fr "Deux? Pourquoi deux?"
+
+            color "red", 20%
+            line_color "red"
+            line_width 3
+            ellipse -280, 60, 150, 100
+
+        translate_x 2000
+        image 0, 50, 70%, 70%, "BuildStep2.png"
+
+        translate_x 2000
+        image 0, 50, 60%, 60%, "BuildStep3.png"
+
+        translate_x 2000
+        image 0, 50, 60%, 60%, "BuildStep4.png"
+
+        translate_x 2000
+        image 0, 50, 80%, 80%, "BuildStep5.png"
+
+        translate_x 2000
+        if smooth_step >= 7.2 and smooth_step <= 8.9 then
+            image -400, 50, 65%, 65%, "AutoconfOutput.png"
+            box 500, 50, 800, 600,
+                * "Does my program really depend on --param=ssp-buffer-size=4?" fr "C'est quoi ce --param=ssp-buffer-size=4?"
+                * "What happens if the option is not supported?" fr "Qu'est ce qui se passe quand l'option ne marche pas?"
+                * "Why should I care about a read-only GOT table?" fr "Ça m'apporte quoi, une GOT qu'on ne peut pas écrire?"
+
+        translate_x 2000
+        if smooth_step >= 8.2 and smooth_step <= 9.9 then
+            box -500, 250, 800, 600,
+                * "13000 lines of perl scripts that parse the error output of 27000 lines of m4 macros to generate bash code?" fr "13000 lignes de scripts Perl pour analyser les erreurs générées par 27000 lignes de macros m4 afin de générer du code bash?"
+                * "What could possibly go wrong?" fr "Forcément, ça va bien se passer"
+            code_box 500, 200, 800, 400, "Autoconf bug #25740 (> 5 yrs old)" fr "Bug #25740 autoconf (age > 5 ans)",
+                font_size 18
+                text load_text "bug25740.txt"
+            code_box 350, -250, 800, 200, "Just re-run it!" fr "Essaie encore!",
+                font_size 18
+                text load_text "re-run-configure.txt"
+            code_box -450, -20, 800, 350, "macOS uses Objective-C" fr "macOS et Objective-C",
+                font_size 18
+                text load_text "objective-c.txt"
+
+        translate_x 2000
+        ASK_ME_THE_QUESTION -> "movies/Monty Python.mp4##start-time=81"
+        if smooth_step >= 9.2 then
+            movie -400, 100, 170%, 170%, ASK_ME_THE_QUESTION
+            movie_set_volume ASK_ME_THE_QUESTION, 100% * fade_between(smooth_step, 10, 10)
+            on "pageexit",
+                movie_drop ASK_ME_THE_QUESTION
+            box 600, 50, 800, 600,
+                font_size 35
+                paragraph "It looks a bit like this scene of Holy Grail" fr "On se dirait un peu dans Monty Python"
+                if shift_modifier then
+                    paragraph "Movie time: " & movie_time ASK_ME_THE_QUESTION
+                show fade_at(movie_time ASK_ME_THE_QUESTION, 98)
+                * "If you run Linux, it just works" fr "Sous Linux, tout va bien (en général)"
+                show fade_at(movie_time ASK_ME_THE_QUESTION, 108)
+                * "For others, it looks easy" fr "Pour les autres, ça a l'air facile"
+                show fade_at(movie_time ASK_ME_THE_QUESTION, 132)
+                * "But they need to answer harder questions" fr "Mais ils ont à répondre à des questions difficiles"
+
+                show fade_at(movie_time ASK_ME_THE_QUESTION, 158)
+                * "Or are forced to make decisions" fr "Ou sont forcés de faire des choix"
+                show fade_at(movie_time ASK_ME_THE_QUESTION, 182)
+                * "While bosses know more than the system" fr "Quant aux vrais durs, ils savent mieux que le système"
+        else
+            movie_drop ASK_ME_THE_QUESTION
+        at_step 10
+
+
+
+// ----------------------------------------------------------------------------
+base_slide "Problem statement" fr "Le problème en bref",
+// ----------------------------------------------------------------------------
+    title page_label
+    subtitle "Autotools: Complex non-solution to simple non-problems" fr "Autotools: des non-solutions compliquées à des non-problèmes simples"
+    stepping
+    story
+        * "Autotools addresses a somewhat obsolete portability problem (pre-Posix variations)" fr "Autotools résoud un problème de portabilité que nous n'avons plus (variabilité pre-Posix)"
+        * "... without really helping with today's code portability" fr "... sans vraiment aider à rendre le code portable aujourd'hui"
+        * "It automatically asks questions that your program does not care about" fr "Il pose automatiquement des questions dont votre programme se fiche"
+        * "... in doing so, making your program less portable, if anything" fr "... ce qui réduirait plutôt l'aspect portable de vos programmes"
+        * "It automates the generation of Makefiles" fr "Il automatise la génération de Makefiles"
+        * "... adding another healthy layer of complexity" fr  "... en rajoutant une bonne couche de complexité"
+        * "Finally, it's super super SUPER slow!" fr "Pour finir, c'est vraiment très (très) LENT!"
+        paragraph " "
+        * "Wait a minute... couldn't all this be dealt with using just Makefiles?" fr "Et... au fait, on ne pourrait pas faire tout ça juste avec des Makefiles?"
+
+
+// ----------------------------------------------------------------------------
+base_slide "Build: auto-configure with make" fr "Build: auto-configurer avec make",
+// ----------------------------------------------------------------------------
+    title page_label
+    subtitle "Use make, all of make, only make" fr  "Utilisons make, tout make, rien que make"
+    stepping
+    story
+        * "Build is a GNU make-based buid system" fr "Build permet de construire des programmes avec GNU make"
+        * "It deals with program dependencies" fr "Il gère les dépendances du programme"
+        ** "Header files from #include" fr "Fichiers ""headers"" pour #include"
+        ** "Subdirectories" fr "Sous-répertoires"
+        ** "Private and public libraries" fr "Librairies publiques et privées"
+        * "It can auto-configure:" fr "Auto-configuration automatique:"
+        ** "Header files such as <sys/stat.h>" fr "Fichiers ""headers"" comme <<sys/stat.h>"
+        ** "Libraries such as libm or libdl" fr "Librairies comme libm ou libdl"
+        ** "Functions like clearenv" fr "Fonctions comme clearenv"
+        * "Package management with pkg-config" fr "Gestion des packages avec pkg-config"
+
+
+// ----------------------------------------------------------------------------
+base_slide "The proof of the pudding" fr "La preuve du pudding",
+// ----------------------------------------------------------------------------
+    title page_label
+    subtitle "The proof of the pudding is that you eat it" fr "La preuve du pudding, c'est qu'on le mange"
+    stepping
+
+    contents 200,
+        BUILD_VS_AUTOCONF -> "movies/build vs autoconf.mov"
+
+        at_step 1
+        if smooth_step > 0.1 then
+            locally
+                color "black"
+                rectangle 10000, 10000
+            scale fade_at (smooth_step, 1)
+            movie 0, 0, 100%, 100%, BUILD_VS_AUTOCONF
+        else
+            movie_drop BUILD_VS_AUTOCONF
+        on "pageexit",
+            movie_drop BUILD_VS_AUTOCONF
+
+
+// ----------------------------------------------------------------------------
+base_slide "A basic makefile" fr "Un makefile de base",
+// ----------------------------------------------------------------------------
+    title page_label
+    subtitle "Give us source files, we do the rest" fr "Donnez nous les sources, build s'occupe du reste"
+    stepping
+    picture
+        code_box 0, 120, 800, 350, "Hello World",
+            font_size 30
+            text load_text "SimpleMake.txt"
+
+
+
+// ----------------------------------------------------------------------------
+base_slide "Adding subdirectories and libraries" fr "Ajouter des sous-répertoires et des librairies",
+// ----------------------------------------------------------------------------
+    title page_label
+    subtitle "Deal with recursive builds" fr "Construction récursive de projets"
+    stepping
+    picture
+        code_box -500, 120, 800, 400, "Recursive",
+            font_size 30
+            text load_text "RecursiveMake.txt"
+        code_box 500, 120, 800, 400, "Libraries",
+            font_size 30
+            text load_text "LibrariesMake.txt"
+
+
+// ----------------------------------------------------------------------------
+base_slide "Adding configuration tests" fr "Ajouter des tests de configuration",
+// ----------------------------------------------------------------------------
+    title page_label
+    subtitle "Deal with system variations" fr "Gérer les variations entre systèmes"
+    stepping
+    picture
+        code_box -500, 120, 800, 600, "Configuration",
+            font_size 30
+            text load_text "ConfigMake.txt"
+        code_box 500, 120, 800, 600, "config.h",
+            font_size 30
+            text load_text "ConfigMake-config.h.txt"
+
+
+
+// ----------------------------------------------------------------------------
+base_slide "Adding packages" fr "Ajouter des ""packages""",
+// ----------------------------------------------------------------------------
+    title page_label
+    subtitle "Deal with external packages" fr "Gérer les ""packages"" externes"
+    stepping
+    picture
+        code_box -500, 0, 800, 700, "Mandatory Packages" fr "Packages obligatoires",
+            font_size 30
+            text load_text "ConfigPackages.txt"
+        code_box 500, 0, 800, 700, "Optional Packages" fr "Packages optionnels",
+            font_size 30
+            text load_text "ConfigPackagesOptions.txt"
+
+
+// ----------------------------------------------------------------------------
+base_slide "Some useful stats" fr "Quelques données chiffrées",
+// ----------------------------------------------------------------------------
+    title page_label
+    subtitle "Build vs. Autotools: The numbers" fr "Build comparé à Autotools en chiffres"
+    stepping
+    picture
+        translate_y 120
+        comparison_chart 1, -500,  200, 300, 300, "Initial build duration" fr "Durée du premier build", "s", 11, 180
+        comparison_chart 2, -500, -200, 300, 300, "Build after changing one file" fr "Durée après avoir changé un fichier", "s", 1.3, 9.5
+        comparison_chart 3, 500, 200, 300, 300, "Size of description files to maintain" fr "Taille des fichiers à maintenir", " lines" fr " lignes", 805, 3731
+        comparison_chart 4, 500, -200, 300, 300, "Size of support files" fr "Taille des fichiers de support", " lines" fr " lignes", 1213, 40253
+        comparison_chart 5, 0, 120, 300, 300, "Number of tools" fr "Nombre d'outils", "", 1, number_of_tools tools_choice
+
+        tools_choice -> integer (fade_at(smooth_step, 5.5) + fade_at(smooth_step, 6.5))
+        number_of_tools 0 -> 4
+        number_of_tools 1 -> 6
+        number_of_tools 2 -> 9
+
+        at_step 5
+        style "code"
+        font_size 25
+        align 50%
+        vertical_align 0%
+        text_box -120, -350, 200, 400,
+            paragraph "make"
+        text_box  120, -350, 200, 400,
+            paragraph "make"
+            paragraph "autoconf"
+            paragraph "automake"
+            paragraph "autoreconf"
+            at_step 6
+            paragraph " "
+            paragraph "configure"
+            paragraph "autogen.sh"
+            show fade_at(tools_choice, 2)
+            at_step 7
+            paragraph " "
+            paragraph "perl"
+            paragraph "m4"
+            paragraph "bash"
+
+    comparison_chart N, X, Y, W, H, Name, Unit, Build, Autoconf ->
+        locally
+            frame_texture W + 100, H + 100,
+                light 0
+                light_position 100, 100, 1000
+                rotate_x  5 * sin(0.1 * time)
+                rotate_y -X * 0.06 + 5 * cos(0.13 * time)
+                locally
+                    extrude_depth 100
+                    extrude_radius 0
+                    rotate_z 90
+                    color "red"
+                    ellipse_sector 0, 0, W*95%, H*95%, 0, 360
+                    translate_z 20
+                    extrude_depth 120
+                    color "green"
+                    ellipse_sector 0, 0, W, H, 0, -360 * Build / Autoconf
+            at_step N
+            color "white"
+            rectangle X, Y, W + 100, H + 100
+
+        locally
+            at_step N
+            color "black"
+            align 50%
+            text_box X, Y, 500 + W, 180 + H,
+                vertical_align 100%
+                font "Arial", 30, bold
+                paragraph Name
+                font "Arial", 20
+                paragraph
+                    text "Build: " & Build & Unit
+                    text " (" & (0.01 * integer(10000.0 * Build / Autoconf))
+                    text "% of Autoconf)" fr "% de Autoconf)"
+                paragraph
+                    text "Autoconf: " & Autoconf & Unit
+                    text " (" & (0.01 * integer(10000.0 * Autoconf / Build))
+                    text "% of Build" fr "% de Build"
+
+
+// ----------------------------------------------------------------------------
+section_slide "Thank you" fr "Merci",
+// ----------------------------------------------------------------------------
+    title page_label
+    subtitle "https://github.com/c3d/build"
+    stepping
+
+    picture
+        translate 600, 450, 20
+        rotate_z -8
+        scale 25%
+        texture "Build.jpg"
+        color "white"
+        rounded_rectangle 0, 0, texture_width, texture_height, 80
+
+    contents 0,
+        text_box 500, -400, 600, 200,
+            style "story"
+            font_size 30
+            anchor
+                image -80, -40, 10%, 10%, "Tao3D.png"
+            paragraph "This Tao3D presentation is available at" fr "Cette présentation Tao3D est disponible ici:"
+            paragraph "https://github.com/c3d/build-presentation"

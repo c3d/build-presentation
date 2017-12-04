@@ -1,0 +1,6 @@
+BUILD=build/
+
+SOURCES=        hello.c                 \
+                hello-helper.c
+
+include $(BUILD)rules.mk

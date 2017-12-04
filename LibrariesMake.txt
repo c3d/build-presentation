@@ -1,0 +1,9 @@
+BUILD=build/
+
+SOURCES=        hello.c                 \
+                hello-helper.c
+
+LIBRARIES=      libs/my-private-lib.lib \
+                shared/shared-stuff.dll
+
+include $(BUILD)rules.mk

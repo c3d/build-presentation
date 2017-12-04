@@ -1,0 +1,20 @@
+BUILD=build/
+
+SOURCES=        hello.c                 \
+                hello-helper.c
+
+SUBDIRS=        libs                    \
+                tests
+
+CONFIG=         <stdio.h>               \
+                <unistd.h>              \
+                <nonexistent.h>         \
+                <sys/time.h>            \
+                <sys/improbable.h>      \
+                <iostream>              \
+                clearenv                \
+                libm                    \
+                liboony                 \
+                sbrk
+
+include $(BUILD)rules.mk

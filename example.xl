@@ -1,0 +1,16 @@
+// Factorial definition
+0! -> 1
+N! -> N * (N-1)!
+
+// If-then-else definition
+if true  then X else Y   -> X
+if false then X else Y   -> Y
+
+// Reactive 3D Graphics description
+story
+    scale 40%
+    image "Hello.jpg"
+    paragraph "Multi-lingual" fr "Polyglotte"
+    * "Custom notations"      fr "Notations sur mesure"
+    * "User-extensble"        fr "Langage extensible"
+    * "Reactive"              fr "Réactif" & seconds

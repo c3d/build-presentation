@@ -1,0 +1,9 @@
+BUILD=build/
+
+SOURCES=        hello.c                 \
+                hello-helper.c
+
+SUBDIRS=        libs                    \
+                tests
+
+include $(BUILD)rules.mk
