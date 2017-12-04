@@ -12,6 +12,7 @@ main_title_slide "Main title",
         paragraph "(and yes, that includes configuration)" fr "(et oui, y compris la configuration automatique)"
     presentation_author "Christophe de Dinechin (dinechin@redhat.com, IRC c3d)"
 
+    highest_step := 1
     picture
         translate 600, 450, 20
         rotate_z -8
@@ -32,7 +33,7 @@ base_slide "Why create yet another 'build' system?" fr "Pourquoi inventer encore
         * "Writing video games" fr "Écrire des jeux vidéo"
         * "Creating programming languages" fr "Créer des langages de programmation"
         * "Designing and implementing an operating system" fr "Concevoir un système d'exploitation commercial"
-        * "Invent an interactive 3D version of the web" fr "Inventer un web en vraie 3D interactive"
+        * "Invent an interactive 3D kind of ""web""" fr "Inventer une sorte de  ""web"" en vraie 3D interactive"
         * "Contributing to the DxO ONE camera" fr "Contribuer à un appareil photo hors normes"
 
         at_step 7
@@ -43,7 +44,7 @@ base_slide "Why create yet another 'build' system?" fr "Pourquoi inventer encore
         paragraph " "
         bold
         color_hsv 20 * time, 60%, 40%
-        paragraph "What about smaller, yet useful things, for a change?" fr "Et des trucs plus simples, mais utiles, pour changer?"
+        paragraph "What if we talked about smaller, yet useful things, for a change?" fr "Et si on parlait des trucs plus simples, mais utiles, pour changer?"
 
     right_picture
         translate_x -100
@@ -313,7 +314,7 @@ base_slide "Autoconf: where is the problem?" fr "C'est quoi le problème avec au
                 text load_text "objective-c.txt"
 
         translate_x 2000
-        ASK_ME_THE_QUESTION -> "movies/Monty Python.mp4##start-time=81"
+        ASK_ME_THE_QUESTION -> (youtube_movie("Monty Python.mp4", "Wpx6XnankZ8") & "##start-time=81")
         if smooth_step >= 9.2 then
             movie -400, 100, 170%, 170%, ASK_ME_THE_QUESTION
             movie_set_volume ASK_ME_THE_QUESTION, 100% * fade_between(smooth_step, 10, 10)
@@ -410,6 +411,7 @@ base_slide "A basic makefile" fr "Un makefile de base",
     subtitle "Give us source files, we do the rest" fr "Donnez nous les sources, build s'occupe du reste"
     stepping
     picture
+        at_step 1
         code_box 0, 120, 800, 350, "Hello World",
             font_size 30
             text load_text "SimpleMake.txt"
@@ -423,9 +425,11 @@ base_slide "Adding subdirectories and libraries" fr "Ajouter des sous-répertoir
     subtitle "Deal with recursive builds" fr "Construction récursive de projets"
     stepping
     picture
+        at_step 1
         code_box -500, 120, 800, 400, "Recursive",
             font_size 30
             text load_text "RecursiveMake.txt"
+        at_step 2
         code_box 500, 120, 800, 400, "Libraries",
             font_size 30
             text load_text "LibrariesMake.txt"
@@ -438,9 +442,11 @@ base_slide "Adding configuration tests" fr "Ajouter des tests de configuration",
     subtitle "Deal with system variations" fr "Gérer les variations entre systèmes"
     stepping
     picture
+        at_step 1
         code_box -500, 120, 800, 600, "Configuration",
             font_size 30
             text load_text "ConfigMake.txt"
+        at_step 2
         code_box 500, 120, 800, 600, "config.h",
             font_size 30
             text load_text "ConfigMake-config.h.txt"
@@ -454,9 +460,11 @@ base_slide "Adding packages" fr "Ajouter des ""packages""",
     subtitle "Deal with external packages" fr "Gérer les ""packages"" externes"
     stepping
     picture
+        at_step 1
         code_box -500, 0, 800, 700, "Mandatory Packages" fr "Packages obligatoires",
             font_size 30
             text load_text "ConfigPackages.txt"
+        at_step 2
         code_box 500, 0, 800, 700, "Optional Packages" fr "Packages optionnels",
             font_size 30
             text load_text "ConfigPackagesOptions.txt"

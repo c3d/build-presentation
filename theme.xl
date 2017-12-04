@@ -468,6 +468,15 @@ rotate_step N, Body ->
         Body
 
 
+youtube_movie File:text, YT:text ->
+// ----------------------------------------------------------------------------
+//   Load a youtube movie locally if cached, otherwise remotely
+// ----------------------------------------------------------------------------
+    if file_exists ("movies/" & File) then
+        "movies/" & File
+    else
+        "https://www.youtube.com/watch?v=" & YT
+
 
 // ============================================================================
 //
@@ -493,7 +502,7 @@ tao "grey"                              -> "#555"
 //
 // ============================================================================
 
-TOTAL_DURATION -> 300 // 20 minutes
+TOTAL_DURATION -> 1500 // 25 minutes
 START_TIME     -> 0.0
 
 key "Right" -> skip 1
