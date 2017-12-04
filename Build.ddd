@@ -399,6 +399,8 @@ base_slide "The proof of the pudding" fr "La preuve du pudding",
             movie_drop BUILD_VS_AUTOCONF
         on "pageexit",
             movie_drop BUILD_VS_AUTOCONF
+        on "key:1", { movie_set_time BUILD_VS_AUTOCONF, 14 }
+        on "key:2", { movie_set_time BUILD_VS_AUTOCONF, 175 }
 
 
 // ----------------------------------------------------------------------------
