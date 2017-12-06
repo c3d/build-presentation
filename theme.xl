@@ -25,7 +25,7 @@ theme_color "RedHat", "main", Theme             -> color "white"
 theme_color "RedHat", "section", Theme          -> color "white"
 
 theme_font  "RedHat", Master, "title"           -> font "Overpass", weight 300
-theme_size  "RedHat", Master, "title"           -> 65
+theme_size  "RedHat", Master, "title"           -> 60
 theme_font  "RedHat", Master, "subtitle"        -> font "Overpass"
 theme_size  "RedHat", Master, "subtitle"        -> 35
 theme_color "RedHat", Master, "subtitle"        -> color "#A21400"
@@ -152,7 +152,8 @@ theme_background "RedHat", Master ->
 // ----------------------------------------------------------------------------
     clear_color "white"
     time
-    background -200,
+    locally
+        translate_z -200
         frame_texture 80, 80,
             line_color "white"
             color "transparent"
@@ -163,13 +164,13 @@ theme_background "RedHat", Master ->
             translate -time * 0.2 mod 1, 0.0, 0
             scale 20 + 10 * sin (0.1 * time)
         texture_wrap true, true
-        color "lightgray", 30%
+        color "lightgray", 60% // 30
         locally
-            translate 620, -620, 0
+            translate window_width / 2 - 80, -window_height / 2 + 80, 0
             redhat_triangle 800, 860
         locally
-            translate -620, 620, 0
-            redhat_triangle 800, 860
+            translate -window_width / 2 + 80, window_height / 2 - 80, 0
+            redhat_triangle -800, -860
         redhat_triangle A, B ->
             path
                 move_to -B, -B
@@ -177,29 +178,31 @@ theme_background "RedHat", Master ->
                 line_to  B,  A
                 line_to -A, -B
                 line_to -B, -B
-    contents -100,
+
+    locally
+        translate 0, bottom_offset + 20, -100
         color "lightgray"
-        rectangle 0, -480, 1700, 2
-    contents -50,
+        rectangle bottom_width, 2
+    locally
+        translate bottom_width/2 - 60, bottom_offset, -50
         color "white"
-        image 800, -510, 100%, 100%, "RedHat-BlackText.png"
-    contents -50,
-        box -790, -510, 120, 50,
-            vertical_align 0.5
-            font_size 22
+        image 0, 0, 100%, 100%, "RedHat-BlackText.png"
+    locally
+        translate 0, bottom_offset, -50
+        vertical_align 0.5
+        font_size 30 * min(0.5, min(window_width / slide_width, window_height / slide_height))
+        text_box 0, 0, bottom_width - 30, 50,
+            align 0%
             text "Page " & page_number & "/" & page_count
-    contents 0,
-        box 0, -510, 1400, 50,
-            vertical_align 0.5
-            font_size 22
+        text_box 0, 0, bottom_width - 2.5 * text_width("Page 99/99"), 50,
+            align 0%
             text PresentationTitle
-    contents -20,
-        box 0, -510, 1400, 50,
-            vertical_align 0.5
-            font_size 22
-            align_right
+        text_box 0, 0, bottom_width - 250, 50,
+            align 100%
             text month & "/" & day & "/" & year & " - " & hours & ":" & zero minutes & ":" & zero seconds
-    zero N -> if N < 10 then "0" & N else N
+zero N -> if N < 10 then "0" & N else N
+bottom_offset -> (-window_height / 2 + 20)
+bottom_width -> window_width - 100
 
 
 
@@ -515,12 +518,13 @@ key "Backspace" ->
 once
     START_TIME := seconds_time
 
-contents 0,
+locally
     color "red"
-    rectangle 0, -480, 1700 * (seconds_time - START_TIME) / TOTAL_DURATION, 4
+    translate 0, bottom_offset + 20, -90
+    rectangle bottom_width * (seconds_time - START_TIME) / TOTAL_DURATION, 4
     if page_count > 0 then
         color "green"
-        rectangle 0, -480, 1700 * page_number / page_count, 2
+        rectangle bottom_width * page_number / page_count, 2
 
 LANG -> "fr"
 English fr French -> if LANG="fr" then French else English
