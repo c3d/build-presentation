@@ -117,7 +117,8 @@ base_slide "Autowhat?" fr "Autoquoi?",
     subtitle
         paragraph "Do you care about auto-configuration?" fr "Est-ce que l'autoconfiguration, ça vous interpelle?"
         french
-            paragraph "Langages, frameworks et applications cloud-natives"
+            paragraph "Langages, frameworks et applications cloud" & natives
+            natives -> if seconds mod 4 < 2 then " natives" else "-natives"
     stepping
     story
         translate_x 350
