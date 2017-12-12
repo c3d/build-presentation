@@ -26,7 +26,7 @@ main_title_slide "Main title",
 base_slide "Why create yet another 'build' system?" fr "Pourquoi inventer encore un 'build'?",
 // ----------------------------------------------------------------------------
     title page_label
-    subtitle "It's first a rather personal thing" fr "Au début, c'est l'histoire d'un mec"
+    subtitle "It's first a rather personal thing" fr "C'est l'histoire d'un mec"
     stepping
     story
         paragraph "I did a few interesting things:" fr "J'ai fait pas mal de trucs marrants avant"
@@ -45,6 +45,7 @@ base_slide "Why create yet another 'build' system?" fr "Pourquoi inventer encore
         bold
         color_hsv 20 * time, 60%, 40%
         paragraph "What if we talked about smaller, yet useful things, for a change?" fr "Et si on parlait des trucs plus simples, mais utiles, pour changer?"
+        paragraph "Like extracting useful things from these projects?" fr "Comme d'extraire des bouts utiles de ces projets?"
 
     right_picture
         translate_x -100
