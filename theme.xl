@@ -8,7 +8,7 @@ import Filters
 
 
 theme "RedHat"
-PresentationTitle -> "Build: A simple make-based build system" fr "Build: Une meilleure façon d'utiliser 'make'"
+PresentationTitle -> "Make-it-Quick: A simple make-based build system" fr "Make-it-Quick: Une meilleure façon d'utiliser 'make'"
 
 
 
@@ -526,9 +526,38 @@ locally
         color "green"
         rectangle bottom_width * page_number / page_count, 2
 
-LANG -> "fr"
+LANG -> "en"
 English fr French -> if LANG="fr" then French else English
 english Body -> if LANG="en" then Body
 french  Body -> if LANG="fr" then Body
 key "f" -> LANG := "fr"; refresh 0
 key "e" -> LANG := "en"; refresh 0
+
+
+// ============================================================================
+//
+//   Virtual laser pointer (activate with "l")
+//
+// ============================================================================
+
+key "l" -> laser := 1 - laser
+key "L" -> show_coordinates := 1 -  show_coordinates
+laser -> 0
+show_coordinates -> 0
+contents 500,
+    if show_coordinates > 0 then
+        text_box mouse_x + 90, mouse_y + 40, 150, 90,
+            color "red", 80%
+            font "Arial", 35, bold
+            paragraph "X=" & integer mouse_x
+            paragraph "Y=" & integer mouse_y
+
+locally
+    translate_z 500
+    color "red", 80% * laser
+    rectangle mouse_x, 0, 1, 10000
+    rectangle 0, mouse_y, 10000, 1
+    circle mouse_x, mouse_y, 3
+    line_color "red", 80% * laser
+    color "red", 10% * laser
+    circle mouse_x, mouse_y, 10

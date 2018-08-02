@@ -1,9 +1,9 @@
 // ----------------------------------------------------------------------------
 main_title_slide "Main title",
 // ----------------------------------------------------------------------------
-    title "Build: A better way to make programs?" fr "Build: Une meilleure façon d'utiliser make?"
+    title "Make-It-Quick: Autoconfiguration with Make" fr "Make-It-Quick: Une meilleure façon d'utiliser make?"
     subtitle
-        paragraph "https://github.com/c3d/build"
+        paragraph "https://github.com/c3d/make-it-quick"
         paragraph " "
         italic
         bold
@@ -23,7 +23,7 @@ main_title_slide "Main title",
 
 
 // ----------------------------------------------------------------------------
-base_slide "Why create yet another 'build' system?" fr "Pourquoi inventer encore un 'build'?",
+base_slide "Why create yet another build system?" fr "Pourquoi inventer un nouveau système de build?",
 // ----------------------------------------------------------------------------
     title page_label
     subtitle "It's first a rather personal thing" fr "C'est l'histoire d'un mec"
@@ -447,7 +447,7 @@ base_slide "Problem statement" fr "Le problème en bref",
 
 
 // ----------------------------------------------------------------------------
-base_slide "Build: auto-configure with make" fr "Build: auto-configurer avec make",
+base_slide "Make-it-Quick: Auto-configuring with make" fr "Make-it-Quick: Auto-configurer avec make",
 // ----------------------------------------------------------------------------
     title page_label
     subtitle "Use make, all of make, only make" fr  "Utilisons make, tout make, rien que make"
@@ -462,6 +462,7 @@ base_slide "Build: auto-configure with make" fr "Build: auto-configurer avec mak
         ** "Header files such as <sys/stat.h>" fr "Fichiers ""headers"" comme <sys/stat.h>"
         ** "Libraries such as libm or libdl" fr "Librairies comme libm ou libdl"
         ** "Functions like clearenv" fr "Fonctions comme clearenv"
+        ** "Anything else (using scripts)" fr "Et n'importe quoi d'autre (scripts)"
         * "Package management with pkg-config" fr "Gestion des packages avec pkg-config"
 
 
@@ -542,6 +543,12 @@ base_slide "Adding configuration tests" fr "Ajouter des tests de configuration",
             font_size 20
             text load_text "ConfigMake-config.h.txt"
 
+        at_step 3
+        text_box 0, -400, 1500, 400,
+            style "story"
+            * "Warning: location of config.h" fr "Attention à l'endroit où se trouve config:.h"
+            * "This matters if you use both autoconf and make-it-quick" fr "Cela peut perturber si vous utilisez autoconf et make-it-quick"
+
 
 
 // ----------------------------------------------------------------------------
@@ -566,7 +573,7 @@ base_slide "Some useful stats" fr "Quelques données chiffrées",
 // ----------------------------------------------------------------------------
     title page_label
     subtitle
-        paragraph "Build vs. Autotools: The numbers" fr "Build comparé à Autotools en chiffres"
+        paragraph "Make-it-Quick vs. Autotools: The numbers" fr "Make-it-Quick comparé à Autotools en chiffres"
         paragraph "Data from SPICE project" fr "Données concernant le projet SPICE"
     stepping
     picture
@@ -649,7 +656,7 @@ base_slide "Some useful stats" fr "Quelques données chiffrées",
 section_slide "Thank you" fr "Merci",
 // ----------------------------------------------------------------------------
     title page_label
-    subtitle "https://github.com/c3d/build"
+    subtitle "https://github.com/c3d/make-it-quick"
     stepping
 
     picture

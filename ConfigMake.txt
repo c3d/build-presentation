@@ -1,4 +1,4 @@
-BUILD=build/
+MIQ=make-it-quick/
 
 SOURCES=        hello.c                 \
                 hello-helper.c
@@ -19,4 +19,4 @@ CONFIG=         <stdio.h>               \
                 liboony                 \
                 sbrk
 
-include $(BUILD)rules.mk
+include $(MIQ)rules.mk

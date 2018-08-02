@@ -1,4 +1,4 @@
-BUILD=build/
+MIQ=make-it-quick/
 
 SOURCES=        hello.c                 \
                 hello-helper.c
@@ -8,4 +8,4 @@ PRODUCTS=       hello.exe
 SUBDIRS=        libs                    \
                 tests
 
-include $(BUILD)rules.mk
+include $(MIQ)rules.mk

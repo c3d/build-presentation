@@ -1,4 +1,4 @@
-BUILD=build/
+MIQ=make-it-quick/
 
 SOURCES=        hello.c                 \
                 hello-helper.c
@@ -15,4 +15,4 @@ PKGCONFIGS=     pixman-1                \
                 gstreamer-video-1.0     \
                 gstreamer-audio-1.0
 
-include $(BUILD)rules.mk
+include $(MIQ)rules.mk
